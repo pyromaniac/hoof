@@ -5,7 +5,6 @@
 #include <nss.h>
 #include <resolv.h>
 #include <arpa/inet.h>
-#include <dirent.h>
 
 int _fill_hostent (const char *name, int af, struct hostent *result)
 {
@@ -41,42 +40,19 @@ _nss_pow_gethostbyname2_r (const char *name, int af, struct hostent *result,
               int *h_errnop)
 {
   enum nss_status status = NSS_STATUS_NOTFOUND;
+  char *zone = NULL;
+  int i;
 
-  char *home = getenv("HOME");
-  char *home_cpy = malloc((strlen(home) + 6) * sizeof(char));
-  strcpy(home_cpy, home);
-  DIR *hosts_dir = opendir(strcat(home_cpy, "/.pow"));
-  if (hosts_dir != NULL) {
-    char *name_cpy = malloc((strlen(name) + 1) * sizeof(char));
-    strcpy(name_cpy, name);
-
-    char *pointer = strtok(name_cpy, ".");
-    char *domain = NULL;
-    char *zone = NULL;
-    if (pointer != NULL) {
-      domain = pointer;
-      zone = pointer;
+  for (i = strlen(name) - 1; i >=  0; i--) {
+    if (name[i] == '.') {
+      zone = (char *) (name + i);
+      break;
     }
-    while (pointer != NULL)
-    {
-      pointer = strtok(NULL, ".");
-      if (pointer != NULL) {
-        domain = zone;
-        zone = pointer;
-      }
-    }
+  }
 
-    if (strcmp(zone, "dev") == 0) {
-      struct dirent *entry;
-      while ((entry = readdir(hosts_dir)) != NULL) {
-        if (entry->d_type == DT_LNK && strcmp(domain, entry->d_name) == 0) {
-          _fill_hostent(name, af, result);
-          status = NSS_STATUS_SUCCESS;
-        }
-      }
-    }
-
-    closedir(hosts_dir);
+  if (zone && strcmp(zone, ".dev") == 0) {
+    _fill_hostent(name, af, result);
+    status = NSS_STATUS_SUCCESS;
   }
 
   return status;
