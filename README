@@ -1,6 +1,11 @@
 Linux version of https://github.com/37signals/pow/
 
 Now we have a simple resolver.
+
+Compile:
+gcc -Wall -fPIC -c nss_pow.c
+gcc -shared -o libnss_pow.so.2 -Wl,-soname,libnss_pow.so.2 *.o
+
 To install just symlink libnss_pow.so.2 to /lib/libnss_pow.so.2
 
 Then change your /etc/nsswitch.conf like this:
