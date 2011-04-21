@@ -61,7 +61,6 @@ _nss_hoof_gethostbyname2_r (const char *name, int af, struct hostent *result,
           sprintf(domain, "%s.dev", entry->d_name);
         }
 
-        printf("%s\n", domain);
         if (strncmp(domain, name + (n_len - strlen(domain)), n_len) == 0) {
           _fill_hostent(name, af, result);
           status = NSS_STATUS_SUCCESS;
