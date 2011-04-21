@@ -12,10 +12,10 @@ Then change your /etc/nsswitch.conf like this:
 
 hosts:          pow files mdns4_minimal [NOTFOUND=return] dns mdns4
 
-Add pow option anywhere at hosts section.
-
 Next step - create ~/.pow
 
-Then - at ~/pow create symlink anywhere.
+Then - at ~/pow create symlink anywhere. Like this:
 
-ping my_symlink_name.dev - Wuola!
+cd ~/.pow; ln -s ~/work/my_project cool_project
+
+ping cool_project.dev - Wuola!
