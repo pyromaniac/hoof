@@ -36,7 +36,7 @@ int _fill_hostent (const char *name, int af, struct hostent *result)
 }
 
 enum nss_status
-_nss_pow_gethostbyname2_r (const char *name, int af, struct hostent *result,
+_nss_hoof_gethostbyname2_r (const char *name, int af, struct hostent *result,
               char *buffer, size_t buflen, int *errnop,
               int *h_errnop)
 {
@@ -45,34 +45,29 @@ _nss_pow_gethostbyname2_r (const char *name, int af, struct hostent *result,
   char *home = getenv("HOME");
   char *home_cpy = malloc((strlen(home) + 6) * sizeof(char));
   strcpy(home_cpy, home);
-  DIR *hosts_dir = opendir(strcat(home_cpy, "/.pow"));
+  DIR *hosts_dir = opendir(strcat(home_cpy, "/.hoof"));
   if (hosts_dir != NULL) {
-    char *name_cpy = malloc((strlen(name) + 1) * sizeof(char));
-    strcpy(name_cpy, name);
+    struct dirent *entry;
 
-    char *pointer = strtok(name_cpy, ".");
-    char *domain = NULL;
-    char *zone = NULL;
-    if (pointer != NULL) {
-      domain = pointer;
-      zone = pointer;
-    }
-    while (pointer != NULL)
-    {
-      pointer = strtok(NULL, ".");
-      if (pointer != NULL) {
-        domain = zone;
-        zone = pointer;
-      }
-    }
+    while ((entry = readdir(hosts_dir)) != NULL) {
+      int d_len = strlen(entry->d_name) + 4;
+      int n_len = strlen(name);
 
-    if (strcmp(zone, "dev") == 0) {
-      struct dirent *entry;
-      while ((entry = readdir(hosts_dir)) != NULL) {
-        if (entry->d_type == DT_LNK && strcmp(domain, entry->d_name) == 0) {
+      if (entry->d_type == DT_LNK && n_len >= d_len) {
+        char *domain = malloc((d_len + 2) * sizeof(char));
+        if (n_len > d_len) {
+          sprintf(domain, ".%s.dev", entry->d_name);
+        } else {
+          sprintf(domain, "%s.dev", entry->d_name);
+        }
+
+        printf("%s\n", domain);
+        if (strncmp(domain, name + (n_len - strlen(domain)), n_len) == 0) {
           _fill_hostent(name, af, result);
           status = NSS_STATUS_SUCCESS;
         }
+
+        free(domain);
       }
     }
 
@@ -83,9 +78,9 @@ _nss_pow_gethostbyname2_r (const char *name, int af, struct hostent *result,
 }
 
 enum nss_status
-_nss_pow_gethostbyname_r (const char *name, struct hostent *result,
+_nss_hoof_gethostbyname_r (const char *name, struct hostent *result,
               char *buffer, size_t buflen, int *errnop,
               int *h_errnop)
 {
-  return _nss_pow_gethostbyname2_r(name, AF_INET, result, buffer, buflen, errnop, h_errnop);
+  return _nss_hoof_gethostbyname2_r(name, AF_INET, result, buffer, buflen, errnop, h_errnop);
 }
