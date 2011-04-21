@@ -1,0 +1,16 @@
+Linux version of https://github.com/37signals/pow/
+
+Now we have a simple resolver.
+To install just symlink libnss_pow.so.2 to /lib/libnss_pow.so.2
+
+Then change your /etc/nsswitch.conf like this:
+
+hosts:          pow files mdns4_minimal [NOTFOUND=return] dns mdns4
+
+Add pow option anywhere an hosts section.
+
+Next step - create ~/.pow
+
+Then - at ~/pow create symlink anywhere.
+
+ping my_symlink_name.dev - Wuola!
