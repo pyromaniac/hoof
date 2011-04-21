@@ -51,8 +51,8 @@ _nss_pow_gethostbyname2_r (const char *name, int af, struct hostent *result,
     strcpy(name_cpy, name);
 
     char *pointer = strtok(name_cpy, ".");
-    char *domain;
-    char *zone;
+    char *domain = NULL;
+    char *zone = NULL;
     if (pointer != NULL) {
       domain = pointer;
       zone = pointer;
