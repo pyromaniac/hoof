@@ -12,7 +12,7 @@ Then change your /etc/nsswitch.conf like this:
 
 hosts:          pow files mdns4_minimal [NOTFOUND=return] dns mdns4
 
-Add pow option anywhere an hosts section.
+Add pow option anywhere at hosts section.
 
 Next step - create ~/.pow
 
