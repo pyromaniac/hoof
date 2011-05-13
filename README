@@ -1,0 +1,23 @@
+Linux version of https://github.com/37signals/pow/
+
+Now we have a simple resolver.
+
+Compile:
+
+make
+
+To install just symlink libnss_hoof.so.2 to /lib/libnss_hoof.so.2
+
+cd /lib; sudo ln -s /path/to/hoof/libnss_hoof.so.2 libnss_hoof.so.2
+
+Then change your /etc/nsswitch.conf like this:
+
+hosts:          hoof files mdns4_minimal [NOTFOUND=return] dns mdns4
+
+Next step - mkdir ~/.hoof
+
+Then at ~/.hoof create symlink anywhere. Like this:
+
+cd ~/.hoof; ln -s ~/work/my_project cool_project
+
+ping cool_project.dev - Wuola!
