@@ -3,7 +3,7 @@
 
 require 'rubygems'
 require 'daemons'
-require 'lib/hoof'
+require 'hoof'
 
 Daemons.run_proc 'hoof' do
   Hoof.start

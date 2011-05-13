@@ -1,9 +1,6 @@
-require 'eventmachine'
-require 'unicorn'
-
-require 'lib/hoof/http_server'
-require 'lib/hoof/application'
-require 'lib/hoof/application_pull'
+#require 'lib/hoof/http_server'
+#require 'lib/hoof/application'
+#require 'lib/hoof/application_pull'
 
 module Hoof
 

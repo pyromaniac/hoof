@@ -1,0 +1,32 @@
+GEM
+  remote: http://rubygems.org/
+  specs:
+    daemons (1.1.3)
+    eventmachine (0.12.10)
+    git (1.2.5)
+    http_parser (0.1.3)
+    jeweler (1.6.0)
+      bundler (~> 1.0.0)
+      git (>= 1.2.5)
+      rake
+    kgio (2.4.0)
+    rack (1.2.2)
+    rake (0.8.7)
+    rcov (0.9.9)
+    shoulda (2.11.3)
+    unicorn (3.6.2)
+      kgio (~> 2.3)
+      rack
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  bundler (~> 1.0.0)
+  daemons
+  eventmachine
+  http_parser
+  jeweler (~> 1.6.0)
+  rcov
+  shoulda
+  unicorn

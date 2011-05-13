@@ -1,6 +1,9 @@
 source "http://rubygems.org"
 
-
+gem 'daemons'
+gem 'eventmachine'
+gem 'unicorn'
+gem 'http_parser', :require => 'http/parser'
 
 group :development do
   gem "shoulda", ">= 0"

@@ -1,5 +1,3 @@
-require 'http/parser'
-
 module Hoof
   class HttpServer < EventMachine::Connection
     attr_accessor :applications
