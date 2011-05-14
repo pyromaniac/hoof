@@ -3,7 +3,7 @@ source "http://rubygems.org"
 gem 'daemons'
 gem 'eventmachine'
 gem 'unicorn'
-gem 'http_parser', :require => 'http/parser'
+gem 'http_parser'
 
 group :development do
   gem "shoulda", ">= 0"

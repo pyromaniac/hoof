@@ -1,15 +1,19 @@
-#require 'lib/hoof/http_server'
-#require 'lib/hoof/application'
-#require 'lib/hoof/application_pull'
+require 'eventmachine'
+require 'unicorn/launcher'
+require 'http/parser'
+
+require 'hoof/http_server'
+require 'hoof/application'
+require 'hoof/application_pool'
 
 module Hoof
 
-  def self.pull
-    @pull ||= Hoof::ApplicationPull.new
+  def self.pool
+    @pool ||= Hoof::ApplicationPool.new
   end
 
   def self.application name
-    pull.add name
+    pool.add name
   end
 
   def self.start
@@ -24,7 +28,7 @@ module Hoof
 
   def self.stop
     EventMachine.stop
-    pull.stop
+    pool.stop
   end
 
 end

@@ -1,11 +1,10 @@
 #!/usr/bin/env ruby
 # -*- encoding: utf-8 -*-
 
-require 'rubygems'
 require 'daemons'
 require 'hoof'
 
-Daemons.run_proc 'hoof' do
+Daemons.run_proc 'hoof', :dir_mode => :normal, :dir => '/tmp', :log_output => true do
   Hoof.start
 end
 

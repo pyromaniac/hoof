@@ -11,11 +11,11 @@ module Hoof
     end
 
     def start
-      system "cd #{root} && unicorn_rails -l #{sock} -E development -D"
+      system "cd #{root} && bundle exec unicorn_rails -c #{File.join(File.dirname(__FILE__), 'unicorn_config.rb')} -l #{sock} -D"
     end
 
     def stop
-      Process.kill "TERM", pid
+      Process.kill "TERM", pid if File.exists? pid_file
     end
 
     def load_rvm
@@ -38,13 +38,14 @@ module Hoof
     end
 
     def serve data
-      s = UNIXSocket.open(sock)
-      s.write data
-      s.read
+      UNIXSocket.open(sock) do |s|
+        s.write data
+        s.read
+      end
     end
 
     def sock
-      @sock ||= "/tmp/hoof_#{name}.dev.sock"
+      @sock ||= "/tmp/hoof_#{name}.sock"
     end
 
     def pid_file

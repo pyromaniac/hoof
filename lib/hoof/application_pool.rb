@@ -1,5 +1,5 @@
 module Hoof
-  class ApplicationPull < Hash
+  class ApplicationPool < Hash
 
     def add name
       self[name] ||= Hoof::Application.new name
