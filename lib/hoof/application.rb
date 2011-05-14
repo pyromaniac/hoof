@@ -7,6 +7,7 @@ module Hoof
       @root = File.readlink(File.expand_path(File.join("~/.hoof/", name)))
 
       load_rvm
+      load_bundler
       start
     end
 
@@ -27,6 +28,11 @@ module Hoof
 
         RVM.use_from_path! root
       end
+    end
+
+    def load_bundler
+      #ENV['BUNDLE_GEMFILE'] = File.join(root, 'Gemfile')
+      #require 'bundler/setup'
     end
 
     def static? path

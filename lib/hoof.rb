@@ -19,8 +19,8 @@ module Hoof
   def self.start
    EventMachine.epoll
    EventMachine::run do
-     trap("TERM") { Hoof.stop }
-     trap("INT")  { Hoof.stop }
+     trap("TERM") { stop }
+     trap("INT")  { stop }
 
      EventMachine::start_server "127.0.0.1", 3001, Hoof::HttpServer
    end
