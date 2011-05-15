@@ -28,9 +28,9 @@ Then change your /etc/nsswitch.conf like this:
 
 Next step - initialize hoof for application:
 
-<tt>mkdir ~/.hoof && ln -s /path/to/app ~/.hoof/app</tt>
+<tt>cd /to/your/app && hoof init</tt>
 
-Then add unicorn to your app Gemfile and bundle it.
+This adds unicorn to your app Gemfile, so bundle it.
 
 
 
