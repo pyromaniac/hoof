@@ -16,7 +16,7 @@ module Hoof
         name = host.gsub(/.dev$/, '')
         application = Hoof.application name
 
-        if application.static? parser.path.split('?', 2)[0]
+        if application && application.static?(parser.path.split('?', 2)[0])
           p "serve static #{host}#{parser.path}"
           send_data application.serve_static parser.path.split('?', 2)[0]
           close_connection_after_writing

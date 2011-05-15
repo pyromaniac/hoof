@@ -1,28 +1,47 @@
-= hoof
+= Hoof
 
 Linux version of https://github.com/37signals/pow/
 
-Now we have a simple resolver.
+== Installation
 
-Compile:
+=== Gem
 
-make
+At first - install gem
 
-To install just symlink libnss_hoof.so.2 to /lib/libnss_hoof.so.2
+<tt>gem install hoof</tt>
 
-cd /lib; sudo ln -s /path/to/hoof/libnss_hoof.so.2 libnss_hoof.so.2
+=== NSS extension
+
+Second step - you should compile and install libnss_hoof.so.
+
+Compile: cd /to/your/gems/installation/path/gems/hoof-x.x.x/ext and +make+
+
+Install: just symlink maked libnss_hoof.so.2 to /lib/libnss_hoof.so.2. Like this:
+
+<tt>cd /lib; sudo ln -sf /to/your/gems/installation/path/gems/hoof-x.x.x/ext/libnss_hoof.so.2</tt>
 
 Then change your /etc/nsswitch.conf like this:
 
-hosts:          hoof files mdns4_minimal [NOTFOUND=return] dns mdns4
+<tt>hosts:          files mdns4_minimal [NOTFOUND=return] dns mdns4 hoof</tt>
 
-Next step - mkdir ~/.hoof
+=== Application
 
-Then at ~/.hoof create symlink anywhere. Like this:
+Next step - initialize hoof for application:
 
-cd ~/.hoof; ln -s ~/work/my_project cool_project
+<tt>mkdir ~/.hoof && ln -s /path/to/app ~/.hoof/app</tt>
 
-ping cool_project.dev - Wuola!
+Then add unicorn to your app Gembile and bundle it.
+
+
+
+== Daemon
+
+Hoof has basic cli for controlling.
+
+Use <tt>hoof</tt> executable to start daemon. Read <tt>hoof help</tt>
+
+Start your browser and go to http://app.dev:3001
+
 
 
 

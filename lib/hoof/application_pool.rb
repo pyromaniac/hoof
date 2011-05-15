@@ -5,6 +5,10 @@ module Hoof
       self[name] ||= Hoof::Application.new name
     end
 
+    def list
+      keys
+    end
+
     def stop
       each do |(name, app)|
         app.stop

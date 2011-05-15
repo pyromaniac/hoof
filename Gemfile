@@ -4,6 +4,7 @@ gem 'daemons'
 gem 'eventmachine'
 gem 'unicorn'
 gem 'http_parser'
+gem 'thor'
 
 group :development do
   gem "shoulda", ">= 0"
