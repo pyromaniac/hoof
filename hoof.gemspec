@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["pyromaniac"]
-  s.date = %q{2011-05-15}
+  s.date = %q{2011-05-16}
   s.default_executable = %q{hoof}
   s.description = %q{Hoof is linux variant of pow. It's based on nss, eventmachine and unicorn}
   s.email = %q{kinwizard@gmail.com}
@@ -35,6 +35,7 @@ Gem::Specification.new do |s|
     "lib/hoof/application.rb",
     "lib/hoof/application_pool.rb",
     "lib/hoof/cli.rb",
+    "lib/hoof/control_server.rb",
     "lib/hoof/http_server.rb",
     "lib/hoof/unicorn_config.rb",
     "test/helper.rb",
