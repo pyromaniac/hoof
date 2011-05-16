@@ -8,17 +8,22 @@ module Hoof
 
     default_task :start
 
-    desc 'hoof start', 'Starts hoof daemon'
+    desc 'start', 'Starts hoof daemon'
     def start
       daemon 'start'
     end
 
-    desc 'hoof stop', 'Stops hoof daemon'
+    desc 'stop', 'Stops hoof daemon'
     def stop
       daemon 'stop'
     end
 
-    desc 'hoof init [NAME]', 'Initializes hoof for app in current directory'
+    desc 'restart', 'Restarts hoof daemon'
+    def restart
+      daemon 'restart'
+    end
+
+    desc 'init [NAME]', 'Initializes hoof for app in current directory'
     long_desc <<-D
       Initializes hoof for current directory application.
       This task creates symlink in ~/.hoof and adds unicorn to
@@ -31,15 +36,27 @@ module Hoof
       append_to_file 'Gemfile', "\ngem 'unicorn'"
     end
 
-    #desc "list", "Lists started applications"
-    #def list
-    #end
+    desc "status", "Lists hoof applications"
+    def status
+      control 'status'
+    end
 
   private
 
     def daemon *argv
       Daemons.run_proc 'hoof', :dir_mode => :normal, :dir => '/tmp', :log_output => true, :ARGV => argv.flatten do
         Hoof.start
+      end
+    end
+
+    def control comand
+      begin
+        UNIXSocket.open(Hoof.sock) do |s|
+          s.write comand
+          puts s.read
+        end
+      rescue Errno::ECONNREFUSED
+        puts 'Hoof is not running'
       end
     end
 

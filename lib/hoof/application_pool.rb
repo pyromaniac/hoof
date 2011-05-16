@@ -1,12 +1,11 @@
 module Hoof
   class ApplicationPool < Hash
 
-    def add name
-      self[name] ||= Hoof::Application.new name
-    end
-
-    def list
-      keys
+    def reload
+      Dir[File.expand_path('~/.hoof/*')].each do |dir|
+        name = File.basename dir
+        self[name] = Hoof::Application.new name if File.symlink? dir
+      end
     end
 
     def stop

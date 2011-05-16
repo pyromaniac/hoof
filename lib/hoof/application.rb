@@ -5,18 +5,13 @@ module Hoof
     def initialize name
       @name = name
       @root = File.readlink(File.expand_path(File.join("~/.hoof/", name)))
-
-      load_rvm
-      load_bundler
-      start
     end
 
     def start
-      system "cd #{root} && bundle exec unicorn_rails -c #{File.join(File.dirname(__FILE__), 'unicorn_config.rb')} -l #{sock} -D"
-    end
-
-    def stop
-      Process.kill "TERM", pid if File.exists? pid_file
+      unless running?
+        load_rvm
+        system "cd #{root} && bundle exec unicorn_rails -c #{File.join(File.dirname(__FILE__), 'unicorn_config.rb')} -l #{sock} -D"
+      end
     end
 
     def load_rvm
@@ -30,12 +25,15 @@ module Hoof
       end
     end
 
-    def load_bundler
-      #ENV['BUNDLE_GEMFILE'] = File.join(root, 'Gemfile')
-      #require 'bundler/setup'
+    def running?
+      Daemons::Pid.running? pid
     end
 
-    def static? path
+    def stop
+      Process.kill 'TERM', pid if running?
+    end
+
+    def static_file? path
       File.file? File.join(root, 'public', path)
     end
 
@@ -51,7 +49,7 @@ module Hoof
     end
 
     def sock
-      @sock ||= "/tmp/hoof_#{name}.sock"
+      @sock ||= File.join(root, 'tmp/sockets/unicorn.sock')
     end
 
     def pid_file
@@ -59,7 +57,7 @@ module Hoof
     end
 
     def pid
-      File.read(pid_file).to_i
+      File.read(pid_file).to_i if File.exists? pid_file
     end
 
   end

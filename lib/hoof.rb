@@ -3,17 +3,22 @@ require 'unicorn/launcher'
 require 'http/parser'
 
 require 'hoof/http_server'
+require 'hoof/control_server'
 require 'hoof/application'
 require 'hoof/application_pool'
 
 module Hoof
 
   def self.pool
-    @pool ||= Hoof::ApplicationPool.new
+    @pool ||= begin
+      app_pool = Hoof::ApplicationPool.new
+      app_pool.reload
+      app_pool
+    end
   end
 
-  def self.application name
-    pool.add name
+  def self.find name
+    pool[name]
   end
 
   def self.start
@@ -23,12 +28,17 @@ module Hoof
      trap("INT")  { stop }
 
      EventMachine::start_server "127.0.0.1", 3001, Hoof::HttpServer
+     EventMachine::start_server sock, Hoof::ControlServer
    end
   end
 
   def self.stop
-    EventMachine.stop
     pool.stop
+    EventMachine.stop
+  end
+
+  def self.sock
+    '/tmp/hoof.sock'
   end
 
 end
