@@ -27,7 +27,8 @@ module Hoof
      trap("TERM") { stop }
      trap("INT")  { stop }
 
-     EventMachine::start_server "127.0.0.1", 3001, Hoof::HttpServer
+     EventMachine::start_server "127.0.0.1", http_port, Hoof::HttpServer
+     EventMachine::start_server "127.0.0.1", https_port, Hoof::HttpServer
      EventMachine::start_server sock, Hoof::ControlServer
    end
   end
@@ -39,6 +40,14 @@ module Hoof
 
   def self.sock
     '/tmp/hoof.sock'
+  end
+
+  def self.http_port
+    26080
+  end
+
+  def self.https_port
+    26443
   end
 
 end

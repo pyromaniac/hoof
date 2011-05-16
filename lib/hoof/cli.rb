@@ -41,6 +41,22 @@ module Hoof
       control 'status'
     end
 
+    desc "route", "Redirects http ports to hoof default ports with iptables"
+    def route
+      exec <<-E
+        sudo iptables -t nat -I OUTPUT --source 0/0 --destination 127.0.0.1 -p tcp --dport 80 -j REDIRECT --to-ports #{Hoof.http_port} &&
+        sudo iptables -t nat -I OUTPUT --source 0/0 --destination 127.0.0.1 -p tcp --dport 443 -j REDIRECT --to-ports #{Hoof.https_port}
+      E
+    end
+
+    desc "unroute", "Destroys hoof iptables redirecting rules"
+    def unroute
+      exec <<-E
+        sudo iptables -t nat -D OUTPUT --source 0/0 --destination 127.0.0.1 -p tcp --dport 80 -j REDIRECT --to-ports #{Hoof.http_port} &&
+        sudo iptables -t nat -D OUTPUT --source 0/0 --destination 127.0.0.1 -p tcp --dport 443 -j REDIRECT --to-ports #{Hoof.https_port}
+      E
+    end
+
   private
 
     def daemon *argv

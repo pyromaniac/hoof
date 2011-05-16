@@ -24,6 +24,10 @@ Then change your /etc/nsswitch.conf like this:
 
 <tt>hosts:          files mdns4_minimal [NOTFOUND=return] dns mdns4 hoof</tt>
 
+Then set port redirecting up:
+
+<tt>hoof route</tt>
+
 === Application
 
 Next step - initialize hoof for application:
@@ -40,7 +44,7 @@ Hoof has basic cli for controlling.
 
 Use <tt>hoof</tt> executable to start daemon. Read <tt>hoof help</tt>
 
-Start your browser and go to http://app.dev:3001
+Start your browser and go to http://app.dev
 
 
 
