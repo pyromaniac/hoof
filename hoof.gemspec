@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{hoof}
-  s.version = "0.0.4"
+  s.version = "0.0.5"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["pyromaniac"]
-  s.date = %q{2011-05-16}
+  s.date = %q{2011-05-17}
   s.default_executable = %q{hoof}
   s.description = %q{Hoof is linux variant of pow. It's based on nss, eventmachine and unicorn}
   s.email = %q{kinwizard@gmail.com}
