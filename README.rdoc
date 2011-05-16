@@ -2,6 +2,7 @@
 
 Linux version of https://github.com/37signals/pow/
 
+
 == Installation
 
 === Gem
@@ -10,23 +11,15 @@ At first - install gem
 
 <tt>gem install hoof</tt>
 
-=== NSS extension
+=== NSS extension and port forwarding
 
-Second step - you should compile and install libnss_hoof.so.
-
-Compile: cd /to/your/gems/installation/path/gems/hoof-x.x.x/ext and +make+
-
-Install: just symlink maked libnss_hoof.so.2 to /lib/libnss_hoof.so.2. Like this:
-
-<tt>cd /lib; sudo ln -sf /to/your/gems/installation/path/gems/hoof-x.x.x/ext/libnss_hoof.so.2</tt>
+<tt>hoof install</tt>
 
 Then change your /etc/nsswitch.conf like this:
 
 <tt>hosts:          files mdns4_minimal [NOTFOUND=return] dns mdns4 hoof</tt>
 
-Then set port redirecting up:
-
-<tt>hoof route</tt>
+!!Do not forget restart browser!!
 
 === Application
 

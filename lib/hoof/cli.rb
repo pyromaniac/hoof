@@ -36,22 +36,26 @@ module Hoof
       append_to_file 'Gemfile', "\ngem 'unicorn'"
     end
 
-    desc "status", "Lists hoof applications"
+    desc 'status', 'Lists hoof applications'
     def status
       control 'status'
     end
 
-    desc "route", "Redirects http ports to hoof default ports with iptables"
-    def route
-      exec <<-E
+    desc 'install [TARGET]', 'Redirects http ports to hoof default ports with iptables'
+    def install target = ''
+      ext = File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'ext'))
+      puts "Successfully installed NSS library" if system "cd #{ext} && make && sudo make install"
+      puts "Successfully added iptables rules" if system <<-E
         sudo iptables -t nat -I OUTPUT --source 0/0 --destination 127.0.0.1 -p tcp --dport 80 -j REDIRECT --to-ports #{Hoof.http_port} &&
         sudo iptables -t nat -I OUTPUT --source 0/0 --destination 127.0.0.1 -p tcp --dport 443 -j REDIRECT --to-ports #{Hoof.https_port}
       E
     end
 
-    desc "unroute", "Destroys hoof iptables redirecting rules"
-    def unroute
-      exec <<-E
+    desc 'uninstall [TARGET]', 'Destroys hoof iptables redirecting rules'
+    def uninstall target = ''
+      ext = File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'ext'))
+      puts "Successfully uninstalled NSS library" if system "cd #{ext} && sudo make uninstall && make clean"
+      puts "Successfully removed iptables rules" if system <<-E
         sudo iptables -t nat -D OUTPUT --source 0/0 --destination 127.0.0.1 -p tcp --dport 80 -j REDIRECT --to-ports #{Hoof.http_port} &&
         sudo iptables -t nat -D OUTPUT --source 0/0 --destination 127.0.0.1 -p tcp --dport 443 -j REDIRECT --to-ports #{Hoof.https_port}
       E

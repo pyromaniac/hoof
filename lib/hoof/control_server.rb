@@ -2,7 +2,7 @@ module Hoof
   class ControlServer < EventMachine::Connection
 
     def receive_data data
-      p "comand #{data}"
+      puts "Comand #{data}"
       result = send data
       send_data result
       close_connection_after_writing

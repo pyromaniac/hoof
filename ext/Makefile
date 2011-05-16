@@ -11,3 +11,9 @@ libnss_hoof.so.2: $(OBJ)
 
 clean:
 	rm -f *.o *~ libnss_hoof.so.2
+
+install:
+	ln -sf $(CURDIR)/libnss_hoof.so.2 /lib
+
+uninstall:
+	rm /lib/libnss_hoof.so.2
