@@ -3,6 +3,7 @@ require 'unicorn/launcher'
 require 'http/parser'
 
 require 'hoof/http_server'
+require 'hoof/https_server'
 require 'hoof/control_server'
 require 'hoof/application'
 require 'hoof/application_pool'
@@ -28,7 +29,7 @@ module Hoof
      trap("INT")  { stop }
 
      EventMachine::start_server "127.0.0.1", http_port, Hoof::HttpServer
-     EventMachine::start_server "127.0.0.1", https_port, Hoof::HttpServer
+     EventMachine::start_server "127.0.0.1", https_port, Hoof::HttpsServer
      EventMachine::start_server sock, Hoof::ControlServer
    end
   end
@@ -39,7 +40,7 @@ module Hoof
   end
 
   def self.sock
-    '/tmp/hoof.sock'
+    File.expand_path(File.join('~/.hoof', 'hoof.sock'))
   end
 
   def self.http_port

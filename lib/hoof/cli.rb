@@ -75,7 +75,7 @@ module Hoof
           s.write comand
           puts s.read
         end
-      rescue Errno::ECONNREFUSED
+      rescue Errno::ECONNREFUSED, Errno::ENOENT
         puts 'Hoof is not running'
       end
     end
