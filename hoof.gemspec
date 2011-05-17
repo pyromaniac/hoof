@@ -37,6 +37,7 @@ Gem::Specification.new do |s|
     "lib/hoof/cli.rb",
     "lib/hoof/control_server.rb",
     "lib/hoof/http_server.rb",
+    "lib/hoof/https_server.rb",
     "lib/hoof/unicorn_config.rb",
     "test/helper.rb",
     "test/test_hoof.rb"
