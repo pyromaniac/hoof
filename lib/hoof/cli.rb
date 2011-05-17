@@ -32,7 +32,7 @@ module Hoof
     D
     def init name = nil
       name ||= File.basename Dir.getwd
-      create_link File.expand_path(File.join("~/.hoof", name)), '.'
+      create_link File.expand_path(File.join("~/.hoof", name)), Dir.getwd
       append_to_file 'Gemfile', "\ngem 'unicorn'"
     end
 
