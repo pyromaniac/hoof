@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{hoof}
-  s.version = "0.0.6"
+  s.version = "0.0.7"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["pyromaniac"]
-  s.date = %q{2011-05-17}
+  s.date = %q{2011-06-08}
   s.default_executable = %q{hoof}
   s.description = %q{Hoof is linux variant of pow. It's based on nss, eventmachine and unicorn}
   s.email = %q{kinwizard@gmail.com}
@@ -56,7 +56,7 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<daemons>, [">= 0"])
       s.add_runtime_dependency(%q<eventmachine>, [">= 0"])
       s.add_runtime_dependency(%q<unicorn>, [">= 0"])
-      s.add_runtime_dependency(%q<http_parser>, [">= 0"])
+      s.add_runtime_dependency(%q<eventmachine_httpserver>, [">= 0"])
       s.add_runtime_dependency(%q<thor>, [">= 0"])
       s.add_development_dependency(%q<shoulda>, [">= 0"])
       s.add_development_dependency(%q<bundler>, ["~> 1.0.0"])
@@ -66,7 +66,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<daemons>, [">= 0"])
       s.add_dependency(%q<eventmachine>, [">= 0"])
       s.add_dependency(%q<unicorn>, [">= 0"])
-      s.add_dependency(%q<http_parser>, [">= 0"])
+      s.add_dependency(%q<eventmachine_httpserver>, [">= 0"])
       s.add_dependency(%q<thor>, [">= 0"])
       s.add_dependency(%q<shoulda>, [">= 0"])
       s.add_dependency(%q<bundler>, ["~> 1.0.0"])
@@ -77,7 +77,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<daemons>, [">= 0"])
     s.add_dependency(%q<eventmachine>, [">= 0"])
     s.add_dependency(%q<unicorn>, [">= 0"])
-    s.add_dependency(%q<http_parser>, [">= 0"])
+    s.add_dependency(%q<eventmachine_httpserver>, [">= 0"])
     s.add_dependency(%q<thor>, [">= 0"])
     s.add_dependency(%q<shoulda>, [">= 0"])
     s.add_dependency(%q<bundler>, ["~> 1.0.0"])
