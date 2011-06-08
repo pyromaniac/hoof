@@ -3,7 +3,7 @@ source "http://rubygems.org"
 gem 'daemons'
 gem 'eventmachine'
 gem 'unicorn'
-gem 'http_parser'
+gem 'eventmachine_httpserver'
 gem 'thor'
 
 group :development do

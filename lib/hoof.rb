@@ -1,6 +1,6 @@
 require 'eventmachine'
 require 'unicorn/launcher'
-require 'http/parser'
+require 'evma_httpserver'
 
 require 'hoof/http_server'
 require 'hoof/https_server'
