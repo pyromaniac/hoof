@@ -20,7 +20,7 @@ module Hoof
         host = @http_headers.scan(/Host:\s*([-a-zA-z.]*)\000/)[0][0].gsub(/:\d+$/, '')
         close_connection and return unless host =~ /.dev$/
 
-        name = host.gsub(/.dev$/, '')
+        name = host.split('.')[-2]
         application = Hoof.find name
 
         if application

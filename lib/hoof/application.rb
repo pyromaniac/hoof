@@ -9,8 +9,14 @@ module Hoof
 
     def start
       unless running?
-        load_rvm
-        system "cd #{root} && bundle exec unicorn_rails -c #{File.join(File.dirname(__FILE__), 'unicorn_config.rb')} -l #{sock} -D"
+        rvmrc = ""
+        if File.exists?(root + '/.rvmrc')
+          rvmrc = File.read(root + '/.rvmrc').chomp
+          rvmrc << " exec "
+        else
+          load_rvm
+        end
+        system "cd #{root} && #{rvmrc}bundle exec unicorn_rails -c #{File.join(File.dirname(__FILE__), 'unicorn_config.rb')} -l #{sock} -D"
       end
     end
 
