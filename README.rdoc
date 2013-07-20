@@ -1,3 +1,6 @@
+= Sorry guys, the project is not maintained anymore, but (good news!) there is https://github.com/ysbaddaden/prax !
+= Join it, use it, feel free to contribute!
+
 = Hoof
 
 Linux version of https://github.com/37signals/pow/
